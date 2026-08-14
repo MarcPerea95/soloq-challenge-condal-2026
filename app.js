@@ -114,6 +114,28 @@ function timeToMinutes(v){
   return mins + secs / 60;
 }
 
+// Ordena cronológicamente las partidas de un jugador para calcular rachas
+function parseDateValue(v){
+  const [d, m, y] = String(v).split("/").map(Number);
+  return new Date(y || 0, (m || 1) - 1, d || 1);
+}
+function matchIdNum(id){
+  const match = String(id).match(/(\d+)\s*$/);
+  return match ? parseInt(match[1], 10) : 0;
+}
+function computeLongestStreak(log){
+  const sorted = [...log].sort((a, b) => {
+    const diff = parseDateValue(a.date) - parseDateValue(b.date);
+    return diff !== 0 ? diff : matchIdNum(a.matchId) - matchIdNum(b.matchId);
+  });
+  let longest = 0, current = 0;
+  sorted.forEach(g => {
+    current = g.win ? current + 1 : 0;
+    if (current > longest) longest = current;
+  });
+  return longest;
+}
+
 /* ------------------------------------------------------------
    3) Aggregate raw rows into one stat block per player
 ------------------------------------------------------------- */
@@ -131,12 +153,13 @@ function buildPlayerStats(rows){
       name, games:0, wins:0, kills:0, deaths:0, assists:0,
       totalDmg:0, minutes:0, visionScore:0, champCounts:{},
       goldEarned:0, dragons:0, barons:0, towers:0, inhibitors:0,
-      pentakills:0, totalCS:0,
+      pentakills:0, totalCS:0, resultLog:[],
     };
 
     const p = byPlayer[name];
     p.games += 1;
     if (bool(r["Result"])) p.wins += 1;
+    p.resultLog.push({ date: r["Date"], matchId: r["MatchID"], win: bool(r["Result"]) });
     p.kills += num(r["Asesinatos"]);
     p.deaths += num(r["Muertes"]);
     p.assists += num(r["Asistencias"]);
@@ -165,6 +188,7 @@ function buildPlayerStats(rows){
     return {
       ...p,
       top3Champs,
+      longestWinStreak: computeLongestStreak(p.resultLog),
       winRate: p.games ? p.wins / p.games : 0,
       kda: p.deaths > 0 ? (p.kills + p.assists) / p.deaths : (p.kills + p.assists),
       kdaPerfect: p.deaths === 0,
@@ -261,6 +285,7 @@ const ICONS = {
   tower: `<path d="M7 21V9l5-5 5 5v12M9 21v-6h6v6M4 9h16" stroke-width="1.5" fill="none" stroke-linejoin="round"/>`,
   burst: `<path d="M12 2l1.8 6.2L20 6l-3.6 5L20 16l-6.2-1.8L12 22l-1.8-6.2L4 18l3.6-5L4 6l6.2 1.8z" stroke-width="1.3" fill="none" stroke-linejoin="round"/>`,
   wheat: `<path d="M12 22V9M12 9c-2 0-3-1.5-3-3.5S12 2 12 2s3 1 3 3.5S14 9 12 9zM9 13c-2-.5-3-2-3-2s1.5-1.5 3.5-1 2.5 2.5 2.5 2.5M15 13c2-.5 3-2 3-2s-1.5-1.5-3.5-1-2.5 2.5-2.5 2.5" stroke-width="1.4" fill="none" stroke-linejoin="round"/>`,
+  bolt: `<path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" stroke-width="1.4" fill="none" stroke-linejoin="round"/>`,
   trophy: `<path d="M8 4h8v4a4 4 0 01-8 0V4zM6 5H4v2a3 3 0 003 3M18 5h2v2a3 3 0 01-3 3M10 15h4v3h-4zM8 21h8" stroke-width="1.5" fill="none" stroke-linejoin="round"/>`,
 };
 function icon(name){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round">${ICONS[name] || ICONS.trophy}</svg>`; }
@@ -327,6 +352,9 @@ const TROPHIES = [
 
   { id:"precision", name:"Precisión fatal", desc:"CS acumulado por minuto de partida", icon:"wheat", cat:"vision",
     compute: s => { const r = topBy(s, p=>p.csPerMin, {minGames:3}); return { ...r, fmt: v => `${v.toFixed(1)} CS/min` }; } },
+
+  { id:"streak", name:"Racha imparable", desc:"Mayor racha de victorias consecutivas", icon:"bolt", cat:"macro",
+    compute: s => { const r = topBy(s, p=>p.longestWinStreak); return r.value > 0 ? { ...r, fmt: v => `${v} victoria${v===1?"":"s"} seguidas` } : { value:null, winners:[] }; } },
 ];
 
 /* ------------------------------------------------------------
