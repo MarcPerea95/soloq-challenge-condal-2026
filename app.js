@@ -185,7 +185,7 @@ function buildPlayerStats(rows){
 /* ------------------------------------------------------------
    3b) Tournament-wide stats (not per player) for the stats cards
 ------------------------------------------------------------- */
-const MIN_CHAMP_GAMES = 2; // avoids a single lucky/unlucky pick deciding "best/worst champion"
+const MIN_CHAMP_GAMES = 5; // avoids a single lucky/unlucky pick deciding "best/worst champion"
 
 function buildTournamentStats(rows){
   let totalGames = 0, totalWins = 0;
