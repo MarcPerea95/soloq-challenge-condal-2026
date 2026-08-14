@@ -1,179 +1,86 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SoloQ Challenge 2026 - Infografía</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SoloQ Challenge 2026 · Condal Esports</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="container">
-        <!-- CABECERA PRINCIPAL & TIMER -->
-        <header>
-            <div style="font-size: 0.8rem; letter-spacing: 2px; color: var(--gold-primary); text-transform: uppercase; font-weight: 700; margin-bottom: 0.5rem;">
-                Edición 2026 · CONDAL ESPORTS · EUW
-            </div>
-            <h1>SoloQ Challenge</h1>
-            <p>Infografía Oficial de Rendimiento</p>
+<div class="bg-grid"></div>
 
-            <div class="countdown-box">
-                <div class="timer-unit">
-                    <span id="days" class="number">00</span>
-                    <span class="label">Días</span>
-                </div>
-                <div class="timer-unit">
-                    <span id="hours" class="number">00</span>
-                    <span class="label">Horas</span>
-                </div>
-                <div class="timer-unit">
-                    <span id="minutes" class="number">00</span>
-                    <span class="label">Min</span>
-                </div>
-                <div class="timer-unit">
-                    <span id="seconds" class="number">00</span>
-                    <span class="label">Seg</span>
-                </div>
-            </div>
-        </header>
+<header class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">— Condal Esports · Temporada 2026 —</p>
+    <h1 class="title">SoloQ <span>Challenge</span></h1>
+    <p class="subtitle">Condal Esports · 2026</p>
 
-        <!-- PODIO TOP 3 / HIGHLIGHTS -->
-        <section style="margin-bottom: 2.5rem;">
-            <h2 class="section-title"><i class="fa-solid fa-crown"></i> Podio & Destacados</h2>
-            <div class="highlights-grid" id="highlights-grid">
-                <div class="highlight-card">
-                    <div class="highlight-badge"><i class="fa-solid fa-trophy"></i></div>
-                    <div class="highlight-info">
-                        <h4>Líder Actual</h4>
-                        <div id="hl-leader" class="player-name">Cargando...</div>
-                        <div id="hl-leader-rank" class="stat-value">-</div>
-                    </div>
-                </div>
-                <div class="highlight-card">
-                    <div class="highlight-badge"><i class="fa-solid fa-fire"></i></div>
-                    <div class="highlight-info">
-                        <h4>Mejor Winrate</h4>
-                        <div id="hl-wr-player" class="player-name">Cargando...</div>
-                        <div id="hl-wr-val" class="stat-value">-</div>
-                    </div>
-                </div>
-                <div class="highlight-card">
-                    <div class="highlight-badge"><i class="fa-solid fa-gamepad"></i></div>
-                    <div class="highlight-info">
-                        <h4>Más Partidas</h4>
-                        <div id="hl-games-player" class="player-name">Cargando...</div>
-                        <div id="hl-games-val" class="stat-value">-</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <div class="hero-panels">
+      <div class="panel countdown-panel">
+        <p class="panel-label">Tiempo restante</p>
+        <div class="countdown" id="countdown" aria-live="polite">
+          <div class="countdown-unit"><span class="cd-num" id="cd-days">--</span><span class="cd-label">días</span></div>
+          <div class="countdown-unit"><span class="cd-num" id="cd-hours">--</span><span class="cd-label">horas</span></div>
+          <div class="countdown-unit"><span class="cd-num" id="cd-mins">--</span><span class="cd-label">min</span></div>
+          <div class="countdown-unit"><span class="cd-num" id="cd-secs">--</span><span class="cd-label">seg</span></div>
+        </div>
+        <p class="panel-footnote" id="countdown-end">Fin: 26 ago 2026 · 00:00 CEST</p>
+      </div>
 
-        <!-- TABLA DE CLASIFICACIÓN (LEADERBOARD) -->
-        <section style="margin-bottom: 3rem;">
-            <h2 class="section-title"><i class="fa-solid fa-list-ol"></i> Tabla de Clasificación</h2>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th style="text-align: center;">Pos</th>
-                            <th>Invocador</th>
-                            <th>Rango</th>
-                            <th>LP</th>
-                            <th>V / D</th>
-                            <th>Winrate</th>
-                            <th>Top Campeones</th>
-                            <th>OP.GG</th>
-                        </tr>
-                    </thead>
-                    <tbody id="leaderboard-body">
-                        <!-- Inyectado por JS -->
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- ESTADÍSTICAS GLOBALES -->
-        <section style="margin-bottom: 3rem;">
-            <h2 class="section-title"><i class="fa-solid fa-chart-pie"></i> Estadísticas Globales</h2>
-            <div class="global-stats-grid">
-                <div class="global-stat-card">
-                    <div class="global-stat-icon"><i class="fa-solid fa-gamepad"></i></div>
-                    <div class="global-stat-content">
-                        <span class="global-stat-label">Partidas Totales</span>
-                        <span id="gs-total-games" class="global-stat-value">0</span>
-                    </div>
-                </div>
-                <div class="global-stat-card">
-                    <div class="global-stat-icon win"><i class="fa-solid fa-check"></i></div>
-                    <div class="global-stat-content">
-                        <span class="global-stat-label">Victorias Totales</span>
-                        <span id="gs-total-wins" class="global-stat-value win">0V</span>
-                    </div>
-                </div>
-                <div class="global-stat-card">
-                    <div class="global-stat-icon loss"><i class="fa-solid fa-xmark"></i></div>
-                    <div class="global-stat-content">
-                        <span class="global-stat-label">Derrotas Totales</span>
-                        <span id="gs-total-losses" class="global-stat-value loss">0D</span>
-                    </div>
-                </div>
-                <div class="global-stat-card">
-                    <div class="global-stat-icon"><i class="fa-solid fa-percent"></i></div>
-                    <div class="global-stat-content">
-                        <span class="global-stat-label">Winrate Global</span>
-                        <span id="gs-global-wr" class="global-stat-value">0%</span>
-                        <div class="progress-bar" style="margin-top: 6px; width: 100%;">
-                            <div id="gs-wr-fill" class="progress-fill" style="width: 0%;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Campeones destacados globales -->
-            <div class="champs-stats-grid">
-                <div class="global-stat-card">
-                    <div id="gs-most-champ-img" class="champ-avatar large"></div>
-                    <div class="global-stat-content">
-                        <span class="global-stat-label">Campeón Más Elegido</span>
-                        <span id="gs-most-champ-name" class="global-stat-value" style="font-size: 1.1rem;">-</span>
-                        <span id="gs-most-champ-count" style="font-size: 0.75rem; color: var(--text-muted);">-</span>
-                    </div>
-                </div>
-                <div class="global-stat-card">
-                    <div id="gs-best-champ-img" class="champ-avatar large"></div>
-                    <div class="global-stat-content">
-                        <span class="global-stat-label">Campeón con Mejor WR</span>
-                        <span id="gs-best-champ-name" class="global-stat-value" style="font-size: 1.1rem;">-</span>
-                        <span id="gs-best-champ-wr" style="font-size: 0.75rem; color: var(--win-color); font-weight:600;">-</span>
-                    </div>
-                </div>
-                <div class="global-stat-card">
-                    <div id="gs-worst-champ-img" class="champ-avatar large"></div>
-                    <div class="global-stat-content">
-                        <span class="global-stat-label">Campeón con Peor WR</span>
-                        <span id="gs-worst-champ-name" class="global-stat-value" style="font-size: 1.1rem;">-</span>
-                        <span id="gs-worst-champ-wr" style="font-size: 0.75rem; color: var(--loss-color); font-weight:600;">-</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SALÓN DE LA FAMA Y PREMIOS -->
-        <section style="margin-bottom: 3rem;">
-            <h2 class="section-title"><i class="fa-solid fa-trophy"></i> Salón de la Fama y Menciones</h2>
-            <div class="awards-grid" id="awards-container">
-                <!-- Inyectado por JS con los 15 trofeos originales -->
-            </div>
-        </section>
-
-        <!-- FOOTER -->
-        <footer style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 2rem 0; border-top: 1px solid var(--card-border);">
-            SoloQ Challenge 2026 · Creado con pasión para CONDAL ESPORTS.
-        </footer>
+      <div class="panel leader-panel">
+        <p class="panel-label">Líder supremo</p>
+        <div id="leader-highlight" class="leader-highlight">
+          <div class="skeleton-line"></div>
+        </div>
+      </div>
     </div>
+  </div>
+</header>
 
-    <script src="app.js"></script>
+<main>
+  <section class="section leaderboard-section" id="leaderboard-section">
+    <div class="section-head">
+      <h2 class="section-title">Clasificación</h2>
+      <p class="section-sub">Ordenada por rango de SoloQ</p>
+    </div>
+    <div class="lb-head" aria-hidden="true">
+      <div>Pos</div><div></div><div>Jugador</div><div>V / D</div><div>Winrate</div><div>Top campeones</div><div>Rango SoloQ</div>
+    </div>
+    <div class="leaderboard" id="leaderboard">
+      <div class="skeleton-block"></div>
+    </div>
+  </section>
+
+  <section class="section stats-section" id="stats-section">
+    <div class="section-head">
+      <h2 class="section-title">Estadísticas generales del torneo</h2>
+      <p class="section-sub">El torneo en números</p>
+    </div>
+    <div class="stats-grid" id="stats-grid">
+      <div class="skeleton-block"></div>
+    </div>
+  </section>
+
+  <section class="section trophies-section" id="trophies-section">
+    <div class="section-head">
+      <h2 class="section-title">Salón de trofeos</h2>
+      <p class="section-sub">Un logro por cada forma de dejar huella en la Grieta</p>
+    </div>
+    <div class="trophy-grid" id="trophy-grid">
+      <div class="skeleton-block"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p id="last-updated">Cargando datos…</p>
+  <p class="footer-sub">Datos vía Riot API · Actualización automática cada 5 minutos</p>
+</footer>
+
+<script src="app.js"></script>
 </body>
 </html>
