@@ -23,12 +23,12 @@ const MIN_GAME_MINUTES = 3; // filters out remakes/aborted games from every stat
    tag    : Riot ID tag shown next to the summoner name (without '#')
 ------------------------------------------------------------- */
 const PLAYER_CONFIG = {
-  "Dügün":  { summoner: "Dugunsito",         tag: "EUW", tier: "SILVER", division: 2, lp: 95 },
-  "Laion":  { summoner: "BarbAhridaddy",     tag: "EUW", tier: "GOLD",   division: 4, lp: 32 },
-  "Juanjo": { summoner: "JuanchoCasalobas",  tag: "EUW", tier: "GOLD",   division: 4, lp: 27 },
-  "Laia":   { summoner: "JustRakan",         tag: "EUW", tier: "BRONZE", division: 4, lp: 75 },
-  "Marc":   { summoner: "FableD0t",          tag: "EUW", tier: "GOLD",   division: 3, lp: 5 },
-  "Sito":   { summoner: "Perro Sanchez",     tag: "EUW", tier: "SILVER", division: 3, lp: 30 },
+  "Dügün":  { summoner: "Dugunsito",         tag: "EUW", tier: "GOLD", division: 4, lp: 50 },
+  "Laion":  { summoner: "BarbAhridaddy",     tag: "EUW", tier: "GOLD",   division: 2, lp: 52 },
+  "Juanjo": { summoner: "JuanchoCasalobas",  tag: "EUW", tier: "GOLD",   division: 4, lp: 59 },
+  "Laia":   { summoner: "JustRakan",         tag: "EUW", tier: "BRONZE", division: 3, lp: 14 },
+  "Marc":   { summoner: "FableD0t",          tag: "EUW", tier: "GOLD",   division: 3, lp: 23 },
+  "Sito":   { summoner: "Perro Sanchez",     tag: "EUW", tier: "SILVER", division: 3, lp: 70 },
 };
 
 const TIER_ORDER = ["UNRANKED","IRON","BRONZE","SILVER","GOLD","PLATINUM","EMERALD","DIAMOND","MASTER","GRANDMASTER","CHALLENGER"];
